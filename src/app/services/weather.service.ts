@@ -7,25 +7,10 @@ import { WeatherForecastI } from '../interfaces/weather';
   providedIn: 'root',
 })
 export class WeatherService {
-  private apiKey = '74235fb7337c62e21975b82e38765d83';
-  private apiUrl = 'https://api.openweathermap.org/data/2.5/weather';
   private apiUrlForecast =
     'https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/';
 
   constructor(private http: HttpClient) {}
-
-  getWeather(city: string): Observable<string> {
-    const url = `${this.apiUrl}?q=${city}&appid=${this.apiKey}&units=metric`;
-    return this.http.get(url).pipe(
-      map((data) => {
-        return this.parseWeatherData(data);
-      }),
-      catchError((error) => {
-        console.error('Error fetching weather data:', error);
-        return of('Error fetching weather data');
-      })
-    );
-  }
 
   getWeatherForecast(city: string): Observable<WeatherForecastI> {
     const url = `${this.apiUrlForecast}/${city}?unitGroup=us&include=days&key=KXJGEFC6J6S3NVNCS93AR23G7&contentType=json`;

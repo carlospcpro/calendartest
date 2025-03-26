@@ -57,7 +57,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
     this.getCalendarDays();
   }
 
-  // Calendar
   getCalendarDays() {
     const today = new Date();
     const year = today.getFullYear();
