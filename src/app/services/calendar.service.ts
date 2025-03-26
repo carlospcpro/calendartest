@@ -1,32 +1,123 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Reminder } from '../interfaces/reminder';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CalendarService {
+  public reminders = new BehaviorSubject<Reminder[]>([]);
+  reminders$ = this.reminders.asObservable();
 
-  reminders: Reminder[] = [];
+  remindersDummyData: Reminder[] = [
+    {
+      dateTime: new Date(2025, 2, 4),
+      text: "Doctor's appointment",
+      color: '#008a63',
+      city: 'Mexico',
+      id: 1,
+    },
+    {
+      dateTime: new Date(2025, 2, 4),
+      text: "Doctor's appointment",
+      color: '#008a63',
+      city: 'Mexico',
+      id: 11,
+    },
+    {
+      dateTime: new Date(2025, 2, 4),
+      text: "Doctor's appointment",
+      color: '#008a63',
+      city: 'Mexico',
+      id: 12,
+    },
+    {
+      dateTime: new Date(2025, 2, 4),
+      text: "Doctor's appointment",
+      color: '#008a63',
+      city: 'Mexico',
+      id: 13,
+    },
+    {
+      dateTime: new Date(2025, 2, 4),
+      text: "Doctor's appointment",
+      color: '#008a63',
+      city: 'Mexico',
+      id: 14,
+    },
+    {
+      dateTime: new Date(2025, 2, 4),
+      text: "Doctor's appointment",
+      color: '#008a63',
+      city: 'Mexico',
+      id: 15,
+    },
+    {
+      dateTime: new Date(2025, 2, 31),
+      text: 'Team meeting',
+      color: '#a08a63',
+      city: 'Tijuana',
+      id: 2,
+    },
+    {
+      dateTime: new Date(2025, 2, 15),
+      text: 'Project deadline',
+      color: '#00fa63',
+      city: 'Guadalajara',
+      id: 3,
+    },
+    {
+      dateTime: new Date(2025, 2, 29),
+      text: 'Family dinner',
+      color: '#008ad3',
+      city: 'Chihuahua',
+      id: 4,
+    },
+    {
+      dateTime: new Date(2025, 2, 28),
+      text: 'Gym session',
+      color: '#008a63',
+      city: 'Mexico',
+      id: 5,
+    },
+    {
+      dateTime: new Date(2025, 3, 5),
+      text: 'Gym session',
+      color: '#008a63',
+      city: 'Mexico',
+      id: 5,
+    },
+  ];
 
-  constructor() { }
+  constructor() {}
 
-  create(data: Reminder): Reminder {
-    return data;
+  initDummyData() {
+    this.reminders.next(this.remindersDummyData);
   }
 
-  edit(data: Reminder): Reminder {
-    return data;
+  create(data: Reminder) {
+    const currentReminders = this.reminders.getValue();
+    this.reminders.next([...currentReminders, data]);
   }
 
-  list(date: Date): Observable<Reminder[]> {
-    console.log(date);
-    return of(this.reminders);
+  edit(data: Reminder) {
+    const currentReminders = this.reminders.getValue();
+    const index = currentReminders.findIndex(
+      (reminder) => reminder.id === data.id
+    );
+    if (index !== -1) {
+      currentReminders[index] = data;
+      this.reminders.next([...currentReminders]);
+    }
   }
 
-  delete(reminderId: string): boolean {
-    console.log(reminderId);
-    return true;
+  delete(data: Reminder) {
+    const currentReminders = this.reminders.getValue();
+    const updatedReminders = currentReminders.filter(
+      (reminder) =>
+        reminder.text !== data.text ||
+        reminder.dateTime.getTime() !== data.dateTime.getTime()
+    );
+    this.reminders.next(updatedReminders);
   }
 }

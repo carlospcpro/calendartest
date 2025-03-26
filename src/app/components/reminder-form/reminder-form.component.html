@@ -1,3 +1,60 @@
 <mat-dialog-content>
-    <p>Reminder form will be here :)</p>
+  <h4>{{ isEditing ? "Edit" : "New" }} Reminder</h4>
+  <form [formGroup]="reminderForm" (ngSubmit)="onSubmit()">
+    <div class="grid-one">
+      <div class="col">
+        <label>
+          Text:
+          <input type="text" formControlName="text" />
+          <span *ngIf="text?.invalid && text?.touched"
+            >Max 30 characters required</span
+          >
+        </label>
+      </div>
+      <div class="col">
+        <label>
+          Date & Time:
+          <input
+            (change)="getWeatherForecast()"
+            type="datetime-local"
+            formControlName="dateTime"
+          />
+          <span *ngIf="dateTime?.invalid && dateTime?.touched"
+            >Date & Time is required</span
+          >
+        </label>
+      </div>
+    </div>
+
+    <div class="grid-two">
+      <div class="col">
+        <label>
+          City:
+          <input type="text" formControlName="city" />
+        </label>
+      </div>
+      <div class="col">
+        <label>
+          Color:
+          <input class="color-input" type="color" formControlName="color" />
+        </label>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="reminderForm.invalid">
+      {{ isEditing ? "Update" : "Submit" }}
+    </button>
+  </form>
+
+  <button class="button-delete" *ngIf="isEditing" (click)="delete()">
+    Delete element
+  </button>
+
+  <ng-container *ngIf="isEditing">
+    <hr />
+    <div class="weather-container">
+      <p class="weather-title">{{ data.city }}</p>
+      <div *ngIf="weatherData" [innerHTML]="weatherData"></div>
+    </div>
+  </ng-container>
 </mat-dialog-content>

@@ -1,3 +1,121 @@
 .spacer {
   flex: 1 1 auto;
 }
+
+main {
+  margin: 0 auto;
+  width: 100%;
+  .main-container {
+    .calendar-wrapper {
+      padding-top: 2rem;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      .day-names {
+        background-color: rgb(194, 46, 73);
+        color: white;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        display: inline-grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        border-top: 2px solid black;
+        border-right: 2px solid black;
+        border-left: 2px solid black;
+        border-radius: 10px 10px 0px 0px;
+        overflow: hidden;
+        p {
+          margin: 0;
+          padding: 0.25rem 0px;
+          text-transform: capitalize;
+        }
+      }
+      .days {
+        display: inline-grid;
+        border: 2px solid black;
+        grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+        grid-template-columns: repeat(7, minmax(100px, 115px));
+        width: 800px;
+        max-width: 800px;
+        .day-container {
+          border-top: 1px solid #a0a0a0;
+          border-right: 1px solid #a0a0a0;
+          border-bottom: 1px solid #a0a0a0;
+          border-left: 1px solid #a0a0a0;
+          margin: 0px;
+          color: black;
+          background-color: white;
+          font-weight: bold;
+          height: 100px;
+          display: block;
+          transition: 0.3s;
+
+          p {
+            padding: 0.5rem 0rem 0rem 0.5rem;
+            margin: 0rem;
+          }
+          &.day-disabled {
+            color: rgb(226, 226, 226);
+          }
+          &.day-weekend {
+            color: rgb(38, 90, 164);
+            background-color: rgb(233, 233, 233);
+          }
+          &:hover {
+            background-color: #eeeeee;
+            transition: 0.3s;
+          }
+        }
+        .reminder-bar {
+          // width: calc(800px / 7) - 7px;
+          overflow: auto;
+          height: 65px;
+          max-height: 65px;
+          p {
+            transition: 0.3s;
+            &:hover {
+              transition: 0.3s;
+              filter: brightness(1.2);
+              cursor: pointer;
+            }
+            margin: 0 auto;
+            margin-bottom: 5px;
+            text-align: center;
+            width: 80%;
+            border-radius: 10px;
+            color: white;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding: 0rem 0.5rem;
+            // display: block;
+          }
+        }
+      }
+    }
+  }
+}
+.demo-ctrls {
+  margin: 1rem auto;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 1rem;
+  padding: 1rem 0rem;
+  background-color: whitesmoke;
+  button {
+    background-color: rgb(194, 46, 73);
+    border-radius: 1rem;
+    border: none;
+    color: white;
+    font-weight: bold;
+    padding: 0.5rem;
+    &:hover {
+      cursor: pointer;
+      background-color: rgb(156, 36, 58);
+    }
+  }
+}

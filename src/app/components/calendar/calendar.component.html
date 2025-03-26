@@ -5,9 +5,48 @@
   <span>Jobsity challenge</span>
   <span class="spacer"></span>
   <button mat-button (click)="openReminderForm()">
-   <mat-icon>add</mat-icon> New reminder
- </button>
+    <mat-icon>add</mat-icon> New reminder
+  </button>
 </mat-toolbar>
 
-<!-- Create the calendar here -->
-<!-- ======================== -->
+<main>
+  <div class="main-container">
+    <div class="calendar-wrapper">
+      <div class="calendar-month">
+        <h3>{{ currentMonthName }} - {{ currentYear }}</h3>
+      </div>
+      <div class="day-names">
+        <ng-container *ngFor="let dayName of dayNames">
+          <p>{{ dayName }}</p>
+        </ng-container>
+      </div>
+      <div class="days">
+        <ng-container *ngFor="let monthDay of monthDays">
+          <div
+            class="day-container"
+            [ngClass]="{
+              'day-disabled': !monthDay.current,
+              'day-weekend': monthDay.isWeekend
+            }"
+          >
+            <p>{{ monthDay.day }}</p>
+            <div class="reminder-bar">
+              <ng-container *ngFor="let reminder of monthDay.reminders">
+                <p
+                  [ngStyle]="{ backgroundColor: reminder.color }"
+                  (click)="openReminderForm(reminder)"
+                >
+                  {{ reminder.text }}
+                </p>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</main>
+<div class="demo-ctrls">
+  <button (click)="initDummyData()">Insert dummy data</button>
+  <button (click)="clearData()">Clear dummy data</button>
+</div>

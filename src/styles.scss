@@ -1,4 +1,80 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+.temperature {
+  display: grid;
+  grid-template-columns: auto auto;
+  width: fit-content;
+  margin-left: 1rem;
+  grid-gap: 1rem;
+  padding-right: 1rem;
+  .left-bar {
+    width: 13px;
+    background: rgb(227, 95, 189);
+    background: linear-gradient(
+      8deg,
+      rgba(227, 95, 189, 1) 0%,
+      rgba(245, 185, 1, 1) 70%,
+      rgba(255, 255, 255, 1) 70%
+    );
+    border-radius: 20px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.214);
+  }
+  .right-content {
+    color: white;
+    align-items: baseline;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+}
+.weather-title {
+  text-align: center;
+  font-size: 1.2rem !important;
+}
+.weather-card-title {
+  text-align: center;
+}
+.grid-weather-one {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 1rem;
+}
+.misc-weather {
+  display: inline-flex;
+  flex-direction: column;
+  grid-gap: 1rem;
+  border-left: 1px solid white;
+  padding-left: 1rem;
+  justify-content: space-between;
+  .data-cont {
+    display: inline-flex;
+    align-items: center;
+    grid-gap: 0.5rem;
+    span {
+      font-size: 2rem;
+      display: block;
+      text-align: center;
+    }
+    p {
+      margin: 0px;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+    strong {
+      font-size: 0.8rem;
+      font-weight: lighter;
+    }
+  }
+}
+.data-cont-one {
+  text-align: center;
+}

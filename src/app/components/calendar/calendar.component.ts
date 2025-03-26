@@ -7,40 +7,158 @@ import { WeatherService } from '../../services/weather.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ReminderFormComponent } from '../reminder-form/reminder-form.component';
 
-
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
-  styleUrls: ['./calendar.component.scss']
+  styleUrls: ['./calendar.component.scss'],
 })
 export class CalendarComponent implements OnInit, OnDestroy {
-
   onDestroy$ = new Subject<boolean>();
+  dayNames = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+  ];
+
+  monthDays: any = [];
+  reminders: Reminder[] = [];
+  currentMonthName: string | undefined;
+  currentYear: number | undefined;
 
   constructor(
     private calendarService: CalendarService,
-    private weatherService: WeatherService,
     private matDialog: MatDialog,
-  ) { }
+    private weatherService: WeatherService
+  ) {}
 
-  ngOnInit(): void {
-    this.calendarService.list(new Date())
-      .pipe(takeUntil(this.onDestroy$))
-      .subscribe((reminders: Reminder[]) => {
-        reminders.map((reminder: Reminder) => {
-          return {
-            ...reminder,
-            weather: this.getWeather(reminder?.city ?? ''),
-          };
-        });
-        console.log(reminders);
-      });
+  getReminders() {
+    this.calendarService.reminders$.subscribe((reminders) => {
+      this.reminders = reminders;
+      console.log('this.reminders', this.reminders);
+
+      this.populateReminders();
+    });
   }
 
-  getWeather(city: string) {
-    const x = this.weatherService.getWeatherInformation(city);
-    console.log(x);
-    return x;
+  initDummyData() {
+    this.calendarService.initDummyData();
+    this.populateReminders();
+  }
+
+  clearData() {
+    this.reminders = [];
+    this.populateReminders();
+  }
+
+  ngOnInit(): void {
+    this.getReminders();
+    this.getCalendarDays();
+  }
+
+  // Calendar
+  getCalendarDays() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth();
+
+    this.currentYear = year;
+    const monthNames = [
+      'January',
+      'February',
+      'March',
+      'April',
+      'May',
+      'June',
+      'July',
+      'August',
+      'September',
+      'October',
+      'November',
+      'December',
+    ];
+
+    this.currentMonthName = monthNames[new Date().getMonth()];
+
+    const firstDayOfMonth = new Date(year, month, 1);
+    const lastDayOfMonth = new Date(year, month + 1, 0);
+
+    const totalDays = lastDayOfMonth.getDate();
+    const firstWeekday = firstDayOfMonth.getDay(); // Domingo = 0, Lunes = 1, ..., Sábado = 6
+
+    const prevMonthLastDay = new Date(year, month, 0).getDate();
+
+    const calendar: {
+      day: number;
+      current: boolean;
+      isWeekend: boolean;
+      reminders: { day: number; text: string }[];
+    }[] = new Array(42);
+
+    // Rellenar los días del mes anterior
+    for (let i = 0; i < firstWeekday; i++) {
+      const dayOfWeek = i % 7;
+      calendar[i] = {
+        day: prevMonthLastDay - firstWeekday + 1 + i,
+        current: false,
+        isWeekend: dayOfWeek === 0 || dayOfWeek === 6,
+        reminders: [],
+      };
+    }
+
+    // Rellenar los días del mes actual
+    for (let i = 0; i < totalDays; i++) {
+      const dayOfWeek = (firstWeekday + i) % 7;
+      calendar[firstWeekday + i] = {
+        day: i + 1,
+        current: true,
+        isWeekend: dayOfWeek === 0 || dayOfWeek === 6,
+        reminders: [],
+      };
+    }
+
+    // Rellenar los días del mes siguiente
+    for (let i = firstWeekday + totalDays; i < 42; i++) {
+      const dayOfWeek = i % 7;
+      calendar[i] = {
+        day: i - (firstWeekday + totalDays) + 1,
+        current: false,
+        isWeekend: dayOfWeek === 0 || dayOfWeek === 6,
+        reminders: [],
+      };
+    }
+
+    this.monthDays = calendar;
+    this.populateReminders();
+  }
+
+  populateReminders() {
+    const reminders: Reminder[] = this.reminders;
+
+    this.monthDays.forEach(
+      (day: {
+        day: number;
+        current: any;
+        reminders: { dateTime: Date; text: string }[];
+      }) => {
+        // Verificar que el mes del recordatorio coincida con el mes actual
+        const dayReminders = reminders.filter((reminder) => {
+          const reminderDate = new Date(reminder.dateTime); // Convertir a Date
+
+          return (
+            reminderDate.getDate() === day.day && // Compara el día
+            reminderDate.getMonth() === new Date().getMonth() && // Compara el mes
+            reminderDate.getFullYear() === new Date().getFullYear() && // Compara el año
+            day.current // Verifica si el día es del mes actual
+          );
+        });
+
+        day.reminders = [...dayReminders];
+      }
+    );
   }
 
   ngOnDestroy() {
@@ -50,10 +168,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
 
   openReminderForm(reminder?: Reminder) {
     this.matDialog.open(ReminderFormComponent, {
-      data: {
-        reminder,
-      },
+      data: reminder,
     });
   }
-
 }
