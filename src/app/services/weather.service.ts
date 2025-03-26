@@ -19,7 +19,7 @@ export class WeatherService {
     return this.http.get(url).pipe(
       map((data) => {
         console.log('Weather Data:', data);
-        return this.parseWeatherData(data); // Asegúrate de que parseWeatherData regrese un string
+        return this.parseWeatherData(data);
       }),
       catchError((error) => {
         console.error('Error fetching weather data:', error);

@@ -87,7 +87,7 @@ export class CalendarComponent implements OnInit, OnDestroy {
     const lastDayOfMonth = new Date(year, month + 1, 0);
 
     const totalDays = lastDayOfMonth.getDate();
-    const firstWeekday = firstDayOfMonth.getDay(); // Domingo = 0, Lunes = 1, ..., Sábado = 6
+    const firstWeekday = firstDayOfMonth.getDay();
 
     const prevMonthLastDay = new Date(year, month, 0).getDate();
 
@@ -98,7 +98,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
       reminders: { day: number; text: string }[];
     }[] = new Array(42);
 
-    // Rellenar los días del mes anterior
     for (let i = 0; i < firstWeekday; i++) {
       const dayOfWeek = i % 7;
       calendar[i] = {
@@ -109,7 +108,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
       };
     }
 
-    // Rellenar los días del mes actual
     for (let i = 0; i < totalDays; i++) {
       const dayOfWeek = (firstWeekday + i) % 7;
       calendar[firstWeekday + i] = {
@@ -120,7 +118,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
       };
     }
 
-    // Rellenar los días del mes siguiente
     for (let i = firstWeekday + totalDays; i < 42; i++) {
       const dayOfWeek = i % 7;
       calendar[i] = {
@@ -144,15 +141,14 @@ export class CalendarComponent implements OnInit, OnDestroy {
         current: any;
         reminders: { dateTime: Date; text: string }[];
       }) => {
-        // Verificar que el mes del recordatorio coincida con el mes actual
         const dayReminders = reminders.filter((reminder) => {
-          const reminderDate = new Date(reminder.dateTime); // Convertir a Date
+          const reminderDate = new Date(reminder.dateTime);
 
           return (
-            reminderDate.getDate() === day.day && // Compara el día
-            reminderDate.getMonth() === new Date().getMonth() && // Compara el mes
-            reminderDate.getFullYear() === new Date().getFullYear() && // Compara el año
-            day.current // Verifica si el día es del mes actual
+            reminderDate.getDate() === day.day &&
+            reminderDate.getMonth() === new Date().getMonth() &&
+            reminderDate.getFullYear() === new Date().getFullYear() &&
+            day.current
           );
         });
 

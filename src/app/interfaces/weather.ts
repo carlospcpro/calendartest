@@ -16,7 +16,7 @@ export interface DayInterface {
   precip: number;
   precipprob: number;
   precipcover: number;
-  preciptype?: string[]; // Optional, since it may be null or undefined
+  preciptype?: string[];
   snow: number;
   snowdepth: number;
   windgust: number;
@@ -37,6 +37,6 @@ export interface DayInterface {
   conditions: string;
   description: string;
   icon: string;
-  stations?: string[] | null; // Optional, since it may be null
+  stations?: string[] | null;
   source: string;
 }

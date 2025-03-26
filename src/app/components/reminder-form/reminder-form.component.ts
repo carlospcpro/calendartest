@@ -44,13 +44,6 @@ export class ReminderFormComponent implements OnInit {
     }
   }
 
-  // getWeather() {
-  //   this.weatherService.getWeather(this.data.city).subscribe((r) => {
-  //     this.weatherData = String(r);
-  //     console.log(this.weatherData);
-  //   });
-  // }
-
   getWeatherForecast() {
     if (!this.data.city) {
       return;
@@ -94,18 +87,14 @@ export class ReminderFormComponent implements OnInit {
       return null;
     }
 
-    // Extract only the "YYYY-MM-DD" part from date before the "T"
     const formattedDate = date.split('T')[0];
 
-    // Find the matching day
     const day = days.find((day) => day.datetime === formattedDate);
 
     if (!day) return null;
 
-    // Return an HTML-formatted string
     return `
         <div class="weather-card">
-
           <div class="weather-card-title">
             <p> <span>🌤️</span> ${new Date(day.datetime).toDateString()}</p>
           </div>
@@ -113,7 +102,7 @@ export class ReminderFormComponent implements OnInit {
                 <p> ${day.description}</p>
             </div>
           <hr>
-<div class="grid-weather-one">
+        <div class="grid-weather-one">
           <div class="temperature">
             <div class="left-bar"></div>
             <div class="right-content">
@@ -138,16 +127,9 @@ export class ReminderFormComponent implements OnInit {
               <strong>Wind</strong>
               </div>
             </div>
-
-
+          </div>
         </div>
-</div>
-
-
-
-
-
-        </div>
+      </div>
     `;
   }
 
