@@ -1,68 +1,75 @@
-<div align="center">
-    <img src="https://avatars.githubusercontent.com/u/986545?s=200&v=4" width="200" height="200"/>
-</div>
+# Angular Calendar Application
 
-# Angular Challenge
+## Overview
 
-## Description
+This is an Angular-based calendar application that allows users to add and manage reminders. The application also retrieves and displays the weather forecast for a given city, but only if the reminder's date is the current date or later within the same month.
 
-This project is designed to test your knowledge of front-end web technologies and assess your ability to create front-​end UI products with attention to details, cross-browser compatibility, standards, and  reusability.
+## Features
 
-## Assignment
+- Users can add reminders (max. 30 characters) to any date and time within the current month.
+- Reminders can be edited, including text, city, date, and time.
+- The weather forecast is retrieved from [Visual Crossing](https://www.visualcrossing.com/weather/weather-data-services#) and displayed inside a modal.
+- The weather is only shown for reminders with dates on or after the current date within the same month.
 
-The goal of this exercise is to create a demo calendar application using Angular.
+## Running the Project
 
-You should start by rendering a single month view of a calendar for the current month, along the lines of the illustration below:
-<div align="center">
-    <img src="https://raw.githubusercontent.com/Jobsity/ReactChallenge/main/src/assets/CalendarSample.png"/>
-</div>
+### Prerequisites
 
-## Mandatory features
- - Ability to add "*reminders*" (max. 30 characters) for a day and time specified by the user. Also, include a city.
- - Ability to edit reminders - including changing text, city, day and time.
- - Add a weather service call from [Visual Crossing](https://www.visualcrossing.com/weather/weather-data-services#) and get the weather forecast (e.g. Rain) for the date of the calendar reminder based on the city.
+Ensure you have the following installed:
 
-## Bonus (Optional)
+- [Node.js](https://nodejs.org/) (Version 18.x or later recommended)
+- [Angular CLI](https://angular.io/cli)
 
-- Expand the calendar to support more than the current month or year.
-- Properly handle overflow when multiple reminders appear on the same date.
-- Unit test the functionality: *Ability to add "*reminders*" (max. 30 characters) for a day and time specified by the user. Also, include a city.*
+### Installation
 
-## Considerations
+1. Clone the repository:
+   ```sh
+   git clone <repository-url>
+   cd <project-folder>
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
 
- - The project is completely focused on Front-end. Ignore the Back-end.
- - Create your Calendar using the route `/calendar`
- - Feel free to use small helper libraries for:
- -- UI Elements.
- -- Date/Time handling.
- - **You must create the calendar component yourself**. Do not user calendar libraries like FullCalendar or Bootstrap Calendar.
- - Provide working API keys to any external API you use.
- - Show us your capabilities on CSS and styling, if possible.
- - You will need to **record a video explaining the code** you created, the decisions you made, its functionality, and demonstrating the complete operation of the challenge. _Remember to show the execution from scratch, it should not be running beforehand._
+### Running the Application
 
+Start the development server:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.1.4.
+```sh
+ng serve
+```
 
-## Development server
+Navigate to `http://localhost:4200/` in your browser. The application will reload automatically if you make changes to the source files.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Usage
 
-## Code scaffolding
+1. Open the calendar view.
+2. Click on any date within the current month to add a reminder.
+3. Enter the reminder text, select a time, and choose a city.
+4. If the reminder date is today or later within the same month, the weather will be retrieved and displayed inside a modal.
+5. Click on a reminder to edit or update it.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Building the Project
 
-## Build
+To create a production build:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+```sh
+ng build
+```
 
-## Running unit tests
+The output will be in the `dist/` directory.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Running Tests
 
-## Running end-to-end tests
+### Unit Tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Run the following command to execute unit tests:
 
-## Further help
+```sh
+ng test
+```
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Additional Help
+
+For more details on Angular CLI commands, visit the [Angular CLI Documentation](https://angular.dev/tools/cli).
