@@ -69,7 +69,6 @@ main {
           }
         }
         .reminder-bar {
-          // width: calc(800px / 7) - 7px;
           overflow: auto;
           height: 65px;
           max-height: 65px;
@@ -90,7 +89,6 @@ main {
             overflow: hidden;
             text-overflow: ellipsis;
             padding: 0rem 0.5rem;
-            // display: block;
           }
         }
       }
