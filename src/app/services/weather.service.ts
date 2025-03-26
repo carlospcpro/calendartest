@@ -18,7 +18,6 @@ export class WeatherService {
     const url = `${this.apiUrl}?q=${city}&appid=${this.apiKey}&units=metric`;
     return this.http.get(url).pipe(
       map((data) => {
-        console.log('Weather Data:', data);
         return this.parseWeatherData(data);
       }),
       catchError((error) => {

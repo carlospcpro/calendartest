@@ -38,8 +38,6 @@ export class CalendarComponent implements OnInit, OnDestroy {
   getReminders() {
     this.calendarService.reminders$.subscribe((reminders) => {
       this.reminders = reminders;
-      console.log('this.reminders', this.reminders);
-
       this.populateReminders();
     });
   }

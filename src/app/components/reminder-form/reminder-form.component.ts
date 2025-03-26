@@ -56,13 +56,6 @@ export class ReminderFormComponent implements OnInit {
           return;
         }
 
-        console.log('r.days', r.days);
-
-        console.log(
-          ' this.formRemider?.value.dateTime',
-          this.formRemider?.value.dateTime
-        );
-
         let weather = this.findDayByDate(
           r.days,
           this.formRemider?.value.dateTime
@@ -73,7 +66,6 @@ export class ReminderFormComponent implements OnInit {
           return;
         }
         this.weatherData = weather;
-        console.log('HERE -> weather FINAL', weather);
       },
       (error) => {
         console.error('Error fetching weather data:', error);
